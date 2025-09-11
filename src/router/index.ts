@@ -11,6 +11,8 @@ import TasksView from '../views/tasks/TasksView.vue';
 import TimeTrackingView from '../views/time/TimeTrackingView.vue';
 import TimeEntriesView from '../views/time/TimeEntriesView.vue';
 import TimesheetView from '../views/time/TimesheetView.vue';
+import InvoicesListView from '../views/invoices/InvoicesListView.vue';
+import InvoiceGenerateView from '../views/invoices/InvoiceGenerateView.vue';
 
 const routes = [
   {
@@ -77,6 +79,16 @@ const routes = [
     path: '/timesheet',
     name: 'timesheet',
     component: TimesheetView
+  },
+  {
+    path: '/invoices',
+    name: 'invoices',
+    component: InvoicesListView
+  },
+  {
+    path: '/invoices/generate',
+    name: 'invoice-generate',
+    component: InvoiceGenerateView
   }
 ];
 
