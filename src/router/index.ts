@@ -6,6 +6,8 @@ import ClientDetailView from '../views/clients/ClientDetailView.vue';
 import ProjectsView from '../views/projects/ProjectsView.vue';
 import ProjectFormView from '../views/projects/ProjectFormView.vue';
 import ProjectDetailView from '../views/projects/ProjectDetailView.vue';
+import KanbanView from '../views/tasks/KanbanView.vue';
+import TasksView from '../views/tasks/TasksView.vue';
 
 const routes = [
   {
@@ -42,6 +44,21 @@ const routes = [
     path: '/projects/:id',
     name: 'project-detail',
     component: ProjectDetailView
+  },
+  {
+    path: '/kanban',
+    name: 'kanban',
+    component: KanbanView
+  },
+  {
+    path: '/tasks',
+    name: 'tasks',
+    component: TasksView
+  },
+  {
+    path: '/projects/:id/kanban',
+    name: 'project-kanban',
+    component: () => import('../views/projects/KanbanView.vue')
   }
 ];
 
