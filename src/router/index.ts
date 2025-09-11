@@ -8,6 +8,9 @@ import ProjectFormView from '../views/projects/ProjectFormView.vue';
 import ProjectDetailView from '../views/projects/ProjectDetailView.vue';
 import KanbanView from '../views/tasks/KanbanView.vue';
 import TasksView from '../views/tasks/TasksView.vue';
+import TimeTrackingView from '../views/time/TimeTrackingView.vue';
+import TimeEntriesView from '../views/time/TimeEntriesView.vue';
+import TimesheetView from '../views/time/TimesheetView.vue';
 
 const routes = [
   {
@@ -59,6 +62,21 @@ const routes = [
     path: '/projects/:id/kanban',
     name: 'project-kanban',
     component: () => import('../views/projects/KanbanView.vue')
+  },
+  {
+    path: '/time-tracking',
+    name: 'time-tracking',
+    component: TimeTrackingView
+  },
+  {
+    path: '/time-entries',
+    name: 'time-entries',
+    component: TimeEntriesView
+  },
+  {
+    path: '/timesheet',
+    name: 'timesheet',
+    component: TimesheetView
   }
 ];
 

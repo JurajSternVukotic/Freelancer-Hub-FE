@@ -3,7 +3,7 @@ import type { Task, TaskPriority } from '../services/taskService'
 export interface UrgencyCalculation {
   urgencyScore: number
   urgencyLevel: 'critical' | 'high' | 'medium' | 'low'
-  urgencyHeight: number
+  urgencyHeight: number // CSS height multiplier (1x to 3x)
   description: string
 }
 
@@ -60,16 +60,16 @@ export function calculateTaskUrgency(task: Task): UrgencyCalculation {
   
   if (urgencyScore >= 15) {
     urgencyLevel = 'critical'
-    urgencyHeight = 3 
+    urgencyHeight = 3 // 3x height
   } else if (urgencyScore >= 10) {
     urgencyLevel = 'high'
-    urgencyHeight = 2.2 
+    urgencyHeight = 2.2 // 2.2x height
   } else if (urgencyScore >= 6) {
     urgencyLevel = 'medium'
-    urgencyHeight = 1.6 
+    urgencyHeight = 1.6 // 1.6x height
   } else {
     urgencyLevel = 'low'
-    urgencyHeight = 1 
+    urgencyHeight = 1 // Normal height
   }
 
   const priorityLabel = {
@@ -95,7 +95,7 @@ export function getUrgencyClasses(urgency: UrgencyCalculation): string[] {
   const classes = [`urgency-${urgency.urgencyLevel}`]
   
   if (urgency.urgencyLevel === 'critical') {
-    classes.push('urgency-pulse') 
+    classes.push('urgency-pulse') // Add pulsing animation for critical tasks
   }
   
   return classes

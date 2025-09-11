@@ -176,7 +176,7 @@ class TaskService {
   async getTasksGroupedByStatus(projectId?: string): Promise<Record<TaskStatus, Task[]>> {
     const response = await this.getTasks({ 
       projectId,
-      limit: 1000,  
+      limit: 1000, // Get all tasks for Kanban
       sort: 'position',
       order: 'asc'
     })

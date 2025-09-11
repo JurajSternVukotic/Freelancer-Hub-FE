@@ -181,7 +181,7 @@ watch(filters, async (newFilters) => {
       projectId: newFilters.projectId || undefined,
       status: newFilters.status as TaskStatus || undefined,
       priority: newFilters.priority as TaskPriority || undefined,
-      limit: 1000 
+      limit: 1000 // Load all tasks like kanban does
     });
   } catch (error) {
     console.error('Failed to filter tasks:', error);
@@ -192,7 +192,7 @@ watch(filters, async (newFilters) => {
 onMounted(async () => {
   try {
     await Promise.all([
-      tasksStore.fetchTasks({ limit: 1000 }), 
+      tasksStore.fetchTasks({ limit: 1000 }), // Load all tasks like kanban does
       projectsStore.fetchProjects()
     ]);
     projects.value = projectsStore.projects;
@@ -204,7 +204,7 @@ onMounted(async () => {
 
 const openTaskModal = (task: Task | null = null) => {
   if (task) {
-    editingTask.value = { ...task };
+    editingTask.value = { ...task }; // Create a copy to avoid reference issues
     taskForm.value = { 
       title: task.title,
       projectId: task.projectId,
@@ -311,7 +311,7 @@ const formatDate = (date: string) => {
 const formatDateForInput = (date: string) => {
   if (!date) return '';
   const d = new Date(date);
-  return d.toISOString().split('T')[0]; 
+  return d.toISOString().split('T')[0]; // Convert to yyyy-MM-dd format
 };
 
 const getStatusLabel = (status: string) => {

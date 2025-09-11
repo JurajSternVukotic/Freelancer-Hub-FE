@@ -159,7 +159,7 @@ const filteredTasks = computed(() => {
   if (selectedProjectId.value) {
     tasks = tasks.filter(t => t && t.projectId === selectedProjectId.value);
   }
-  return tasks.filter(t => t);
+  return tasks.filter(t => t); // Remove any null/undefined tasks
 });
 
 const getTasksForColumn = (status: string) => {

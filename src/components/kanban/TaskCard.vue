@@ -105,7 +105,7 @@ const isTimerRunning = computed(() => {
 const taskUrgency = computed(() => calculateTaskUrgency(props.task))
 const urgencyClasses = computed(() => getUrgencyClasses(taskUrgency.value))
 const urgencyStyle = computed(() => ({
-  minHeight: `${taskUrgency.value.urgencyHeight * 80}px` 
+  minHeight: `${taskUrgency.value.urgencyHeight * 80}px` // Base height 80px * multiplier
 }))
 
 const priorityClass = computed(() => {
