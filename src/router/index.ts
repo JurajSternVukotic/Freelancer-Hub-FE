@@ -89,6 +89,11 @@ const routes = [
     path: '/invoices/generate',
     name: 'invoice-generate',
     component: InvoiceGenerateView
+  },
+  {
+    path: '/projects/:id/expenses',
+    name: 'project-expenses',
+    component: () => import('../views/projects/ProjectExpensesView.vue')
   }
 ];
 
