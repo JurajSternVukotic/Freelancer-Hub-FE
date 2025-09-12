@@ -13,6 +13,8 @@ import TimeEntriesView from '../views/time/TimeEntriesView.vue';
 import TimesheetView from '../views/time/TimesheetView.vue';
 import InvoicesListView from '../views/invoices/InvoicesListView.vue';
 import InvoiceGenerateView from '../views/invoices/InvoiceGenerateView.vue';
+import FinancialDashboardView from '../views/reports/FinancialDashboardView.vue';
+import ExpensesView from '../views/reports/ExpensesView.vue';
 
 const routes = [
   {
@@ -94,6 +96,16 @@ const routes = [
     path: '/projects/:id/expenses',
     name: 'project-expenses',
     component: () => import('../views/projects/ProjectExpensesView.vue')
+  },
+  {
+    path: '/financial',
+    name: 'financial-dashboard',
+    component: FinancialDashboardView
+  },
+  {
+    path: '/expenses',
+    name: 'expenses',
+    component: ExpensesView
   }
 ];
 
