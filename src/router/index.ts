@@ -15,6 +15,10 @@ import InvoicesListView from '../views/invoices/InvoicesListView.vue';
 import InvoiceGenerateView from '../views/invoices/InvoiceGenerateView.vue';
 import FinancialDashboardView from '../views/reports/FinancialDashboardView.vue';
 import ExpensesView from '../views/reports/ExpensesView.vue';
+import ProposalsView from '../views/reports/ProposalsView.vue';
+import ProposalFormView from '../views/reports/ProposalFormView.vue';
+import ProposalDetailView from '../views/reports/ProposalDetailView.vue';
+import RetainersView from '../views/reports/RetainersView.vue';
 
 const routes = [
   {
@@ -106,6 +110,26 @@ const routes = [
     path: '/expenses',
     name: 'expenses',
     component: ExpensesView
+  },
+  {
+    path: '/proposals',
+    name: 'proposals',
+    component: ProposalsView
+  },
+  {
+    path: '/proposals/new',
+    name: 'proposal-form',
+    component: ProposalFormView
+  },
+  {
+    path: '/proposals/:id',
+    name: 'proposal-detail',
+    component: ProposalDetailView
+  },
+  {
+    path: '/retainers',
+    name: 'retainers',
+    component: RetainersView
   }
 ];
 
