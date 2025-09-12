@@ -19,6 +19,13 @@ import ProposalsView from '../views/reports/ProposalsView.vue';
 import ProposalFormView from '../views/reports/ProposalFormView.vue';
 import ProposalDetailView from '../views/reports/ProposalDetailView.vue';
 import RetainersView from '../views/reports/RetainersView.vue';
+import ReportsView from '../views/reports/ReportsView.vue';
+import ProjectReportView from '../views/reports/ProjectReportView.vue';
+import RevenueReportView from '../views/reports/RevenueReportView.vue';
+import TimeReportView from '../views/reports/TimeReportView.vue';
+import InvoicesView from '../views/reports/InvoicesView.vue';
+import InvoiceDetailView from '../views/reports/InvoiceDetailView.vue';
+import InvoiceFormView from '../views/reports/InvoiceFormView.vue';
 
 const routes = [
   {
@@ -130,6 +137,41 @@ const routes = [
     path: '/retainers',
     name: 'retainers',
     component: RetainersView
+  },
+  {
+    path: '/reports',
+    name: 'reports',
+    component: ReportsView
+  },
+  {
+    path: '/reports/projects',
+    name: 'project-reports',
+    component: ProjectReportView
+  },
+  {
+    path: '/reports/revenue',
+    name: 'revenue-reports',
+    component: RevenueReportView
+  },
+  {
+    path: '/reports/time',
+    name: 'time-reports',
+    component: TimeReportView
+  },
+  {
+    path: '/reports/invoices',
+    name: 'invoice-reports',
+    component: InvoicesView
+  },
+  {
+    path: '/reports/invoices/:id',
+    name: 'invoice-detail',
+    component: InvoiceDetailView
+  },
+  {
+    path: '/reports/invoices/form',
+    name: 'invoice-form',
+    component: InvoiceFormView
   }
 ];
 
