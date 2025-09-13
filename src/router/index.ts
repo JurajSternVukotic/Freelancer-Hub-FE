@@ -30,6 +30,11 @@ import ClientDashboardView from '../views/client/ClientDashboardView.vue';
 import ClientProjectRequestsView from '../views/client/ClientProjectRequestsView.vue';
 import ClientInvoicesView from '../views/client/ClientInvoicesView.vue';
 import AiAssistantView from '../views/ai/AiAssistantView.vue';
+import NotFoundView from '../views/errors/NotFoundView.vue';
+import ProfileView from '../views/ProfileView.vue';
+import SettingsView from '../views/SettingsView.vue';
+import ForgotPasswordView from '../views/auth/ForgotPasswordView.vue';
+import ResetPasswordView from '../views/auth/ResetPasswordView.vue';
 
 const routes = [
   {
@@ -196,6 +201,31 @@ const routes = [
     path: '/ai-assistant',
     name: 'ai-assistant',
     component: AiAssistantView
+  },
+  {
+    path: '/profile',
+    name: 'profile',
+    component: ProfileView
+  },
+  {
+    path: '/settings',
+    name: 'settings', 
+    component: SettingsView
+  },
+  {
+    path: '/forgot-password',
+    name: 'forgot-password',
+    component: ForgotPasswordView
+  },
+  {
+    path: '/reset-password',
+    name: 'reset-password',
+    component: ResetPasswordView
+  },
+  {
+    path: '/:pathMatch(.*)*',
+    name: 'not-found',
+    component: NotFoundView
   }
 ];
 
