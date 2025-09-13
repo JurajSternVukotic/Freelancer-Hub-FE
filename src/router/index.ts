@@ -26,6 +26,9 @@ import TimeReportView from '../views/reports/TimeReportView.vue';
 import InvoicesView from '../views/reports/InvoicesView.vue';
 import InvoiceDetailView from '../views/reports/InvoiceDetailView.vue';
 import InvoiceFormView from '../views/reports/InvoiceFormView.vue';
+import ClientDashboardView from '../views/client/ClientDashboardView.vue';
+import ClientProjectRequestsView from '../views/client/ClientProjectRequestsView.vue';
+import ClientInvoicesView from '../views/client/ClientInvoicesView.vue';
 
 const routes = [
   {
@@ -172,6 +175,21 @@ const routes = [
     path: '/reports/invoices/form',
     name: 'invoice-form',
     component: InvoiceFormView
+  },
+  {
+    path: '/client',
+    name: 'client-dashboard',
+    component: ClientDashboardView
+  },
+  {
+    path: '/client/projects',
+    name: 'client-projects',
+    component: ClientProjectRequestsView
+  },
+  {
+    path: '/client/invoices',
+    name: 'client-invoices',
+    component: ClientInvoicesView
   }
 ];
 
