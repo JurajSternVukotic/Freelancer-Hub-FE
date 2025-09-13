@@ -29,6 +29,7 @@ import InvoiceFormView from '../views/reports/InvoiceFormView.vue';
 import ClientDashboardView from '../views/client/ClientDashboardView.vue';
 import ClientProjectRequestsView from '../views/client/ClientProjectRequestsView.vue';
 import ClientInvoicesView from '../views/client/ClientInvoicesView.vue';
+import AiAssistantView from '../views/ai/AiAssistantView.vue';
 
 const routes = [
   {
@@ -190,6 +191,11 @@ const routes = [
     path: '/client/invoices',
     name: 'client-invoices',
     component: ClientInvoicesView
+  },
+  {
+    path: '/ai-assistant',
+    name: 'ai-assistant',
+    component: AiAssistantView
   }
 ];
 
