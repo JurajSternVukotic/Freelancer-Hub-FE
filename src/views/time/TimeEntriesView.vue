@@ -587,7 +587,6 @@ onMounted(async () => {
 }
 
 .entries-list {
-  divide-y divide-border-color;
 }
 
 .entry-card {

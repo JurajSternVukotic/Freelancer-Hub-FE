@@ -136,16 +136,6 @@
           <div class="table-cell">
             <div class="invoice-actions">
               <button 
-                @click="viewInvoice(invoice.id)" 
-                class="action-button view"
-                title="Pogledaj račun"
-              >
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-                  <path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/>
-                </svg>
-              </button>
-
-              <button 
                 @click="downloadPDF(invoice.id, invoice.number)"
                 class="action-button download"
                 title="Preuzmi PDF"
@@ -159,13 +149,11 @@
               <button 
                 v-if="invoice.status === 'SENT'" 
                 @click="markAsPaid(invoice.id)"
-                class="action-button pay"
-                title="Označi kao plaćen"
+                class="action-button pay primary-action"
+                title="Plati račun"
                 :disabled="isMarking"
               >
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-                  <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
-                </svg>
+                <span class="button-text">Plati račun</span>
               </button>
             </div>
           </div>
@@ -251,8 +239,8 @@
               class="pay-button"
               :disabled="isMarking"
             >
-              <span v-if="isMarking">Označavam...</span>
-              <span v-else>Označi kao plaćen</span>
+              <span v-if="isMarking">Obrađujem plaćanje...</span>
+              <span v-else>Plati račun</span>
             </button>
           </div>
         </div>
@@ -600,7 +588,7 @@ onMounted(() => {
 
 .table-header {
   display: grid;
-  grid-template-columns: 1fr 1fr 100px 100px 120px 100px 100px;
+  grid-template-columns: 1fr 1fr 100px 100px 120px 100px 140px;
   background-color: var(--bg-secondary);
   border-bottom: 1px solid var(--border-color);
 }
@@ -614,7 +602,7 @@ onMounted(() => {
 
 .table-row {
   display: grid;
-  grid-template-columns: 1fr 1fr 100px 100px 120px 100px 100px;
+  grid-template-columns: 1fr 1fr 100px 100px 120px 100px 140px;
   border-bottom: 1px solid var(--border-color);
   transition: background-color 0.2s ease;
 }
@@ -710,6 +698,7 @@ onMounted(() => {
   border-radius: 0.375rem;
   cursor: pointer;
   transition: all 0.2s ease;
+  text-decoration: none;
 }
 
 .action-button.view {
@@ -730,6 +719,25 @@ onMounted(() => {
 .action-button.pay:hover:not(:disabled) {
   background-color: var(--success);
   color: white;
+}
+
+.action-button.pay.primary-action {
+  width: auto;
+  min-width: 100px;
+  padding: 0.5rem 1rem;
+  background-color: var(--success);
+  color: white;
+  font-weight: 600;
+  font-size: 0.875rem;
+}
+
+.action-button.pay.primary-action:hover:not(:disabled) {
+  background-color: var(--success-hover, #28a745);
+  transform: scale(1.05);
+}
+
+.action-button .button-text {
+  font-size: 0.875rem;
 }
 
 .action-button:disabled {
@@ -919,7 +927,7 @@ onMounted(() => {
 @media (max-width: 1024px) {
   .table-header,
   .table-row {
-    grid-template-columns: 1fr 1fr 80px 80px 100px 80px 80px;
+    grid-template-columns: 1fr 1fr 80px 80px 100px 80px 120px;
   }
   
   .header-cell,

@@ -199,8 +199,8 @@
 
 <script setup lang="ts">
 import { ref, onMounted, reactive } from 'vue'
-import invoiceService, { type Invoice } from '@/services/invoiceService'
-import clientService, { type Client } from '@/services/clientService'
+import { invoiceService, type Invoice } from '@/services/invoiceService'
+import { clientService, type Client } from '@/services/clientService'
 
 const loading = ref(true)
 const invoices = ref<Invoice[]>([])

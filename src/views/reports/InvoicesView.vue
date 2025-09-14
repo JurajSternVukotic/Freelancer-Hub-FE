@@ -116,7 +116,6 @@
               v-for="invoice in invoices"
               :key="invoice.id"
               class="table-row"
-              @click="viewInvoice(invoice.id)"
             >
               <div class="table-cell">
                 <div class="invoice-number">{{ invoice.number }}</div>
@@ -151,13 +150,6 @@
               
               <div class="table-cell">
                 <div class="action-buttons" @click.stop>
-                  <router-link :to="`/invoices/${invoice.id}/edit`" class="btn btn-sm btn-secondary">
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
-                      <path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/>
-                    </svg>
-                    Uredi
-                  </router-link>
-                  
                   <button
                     @click="downloadInvoice(invoice)"
                     class="btn btn-sm btn-secondary"
@@ -188,7 +180,6 @@
               v-for="invoice in invoices"
               :key="invoice.id"
               class="invoice-card"
-              @click="viewInvoice(invoice.id)"
             >
               <div class="invoice-card-header">
                 <div class="invoice-info">
@@ -220,9 +211,6 @@
               </div>
               
               <div class="invoice-card-actions" @click.stop>
-                <router-link :to="`/invoices/${invoice.id}/edit`" class="btn btn-sm btn-secondary">
-                  Uredi
-                </router-link>
                 <button @click="downloadInvoice(invoice)" class="btn btn-sm btn-secondary">
                   PDF
                 </button>
@@ -334,10 +322,6 @@ function isOverdue(dueDate: string): boolean {
 
 function getStatusText(status: string): string {
   return invoiceService.getStatusText(status)
-}
-
-function viewInvoice(invoiceId: string) {
-  router.push(`/invoices/${invoiceId}`)
 }
 
 function debouncedSearch() {
@@ -586,7 +570,6 @@ onMounted(() => {
 }
 
 .table-row {
-  cursor: pointer;
   transition: background-color 0.2s ease;
 }
 
@@ -689,7 +672,6 @@ onMounted(() => {
   border: 1px solid var(--border-color);
   border-radius: 0.75rem;
   padding: 1rem;
-  cursor: pointer;
   transition: all 0.2s ease;
 }
 

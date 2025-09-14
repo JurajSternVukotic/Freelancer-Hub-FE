@@ -137,7 +137,7 @@ const isFormValid = computed(() => {
 
 function validateForm() {
   errors.value = {}
-
+  
   if (errors.value.general) {
     delete errors.value.general
   }
@@ -172,23 +172,21 @@ async function handleSubmit(event?: Event) {
   
   try {
     if (form.value.accountType === 'freelancer') {
-
       await authStore.login({
         email: form.value.email,
         password: form.value.password,
         rememberMe: form.value.rememberMe
       })
-
+      
       const redirectTo = (route.query.redirect as string) || '/'
       router.push(redirectTo)
       
     } else if (form.value.accountType === 'client') {
-
       await clientAuthStore.login({
         email: form.value.email,
         password: form.value.password
       })
-
+      
       router.push('/client/dashboard')
     }
     

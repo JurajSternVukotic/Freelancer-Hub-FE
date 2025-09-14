@@ -2,14 +2,13 @@ import { defineStore } from 'pinia'
 import { ref, computed } from 'vue'
 
 export const useAppStore = defineStore('app', () => {
-
   const isLoading = ref(false)
   const isDarkMode = ref(false)
   const showTimer = ref(true)
   const sidebarCollapsed = ref(false)
-
+  
   const theme = computed(() => isDarkMode.value ? 'dark' : 'light')
-
+  
   function setLoading(loading: boolean) {
     isLoading.value = loading
   }
@@ -31,7 +30,6 @@ export const useAppStore = defineStore('app', () => {
     if (savedTheme) {
       isDarkMode.value = savedTheme === 'dark'
     } else {
-
       isDarkMode.value = window.matchMedia('(prefers-color-scheme: dark)').matches
     }
     updateTheme()
@@ -56,12 +54,11 @@ export const useAppStore = defineStore('app', () => {
   }
   
   function initializePreferences() {
-
     const savedTimerState = localStorage.getItem('showTimer')
     if (savedTimerState !== null) {
       showTimer.value = savedTimerState === 'true'
     }
-
+    
     const savedSidebarState = localStorage.getItem('sidebarCollapsed')
     if (savedSidebarState !== null) {
       sidebarCollapsed.value = savedSidebarState === 'true'
@@ -69,14 +66,13 @@ export const useAppStore = defineStore('app', () => {
   }
   
   return {
-
     isLoading,
     isDarkMode,
     showTimer,
     sidebarCollapsed,
-
+    
     theme,
-
+    
     setLoading,
     toggleTheme,
     setTheme,

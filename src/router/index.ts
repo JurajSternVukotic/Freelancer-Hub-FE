@@ -1,237 +1,406 @@
-import { createRouter, createWebHistory } from 'vue-router';
-import DashboardView from '../views/DashboardView.vue';
-import ClientsView from '../views/clients/ClientsView.vue';
-import ClientFormView from '../views/clients/ClientFormView.vue';
-import ClientDetailView from '../views/clients/ClientDetailView.vue';
-import ProjectsView from '../views/projects/ProjectsView.vue';
-import ProjectFormView from '../views/projects/ProjectFormView.vue';
-import ProjectDetailView from '../views/projects/ProjectDetailView.vue';
-import KanbanView from '../views/tasks/KanbanView.vue';
-import TasksView from '../views/tasks/TasksView.vue';
-import TimeTrackingView from '../views/time/TimeTrackingView.vue';
-import TimeEntriesView from '../views/time/TimeEntriesView.vue';
-import TimesheetView from '../views/time/TimesheetView.vue';
-import InvoicesListView from '../views/invoices/InvoicesListView.vue';
-import InvoiceGenerateView from '../views/invoices/InvoiceGenerateView.vue';
-import FinancialDashboardView from '../views/reports/FinancialDashboardView.vue';
-import ExpensesView from '../views/reports/ExpensesView.vue';
-import ProposalsView from '../views/reports/ProposalsView.vue';
-import ProposalFormView from '../views/reports/ProposalFormView.vue';
-import ProposalDetailView from '../views/reports/ProposalDetailView.vue';
-import RetainersView from '../views/reports/RetainersView.vue';
-import ReportsView from '../views/reports/ReportsView.vue';
-import ProjectReportView from '../views/reports/ProjectReportView.vue';
-import RevenueReportView from '../views/reports/RevenueReportView.vue';
-import TimeReportView from '../views/reports/TimeReportView.vue';
-import InvoicesView from '../views/reports/InvoicesView.vue';
-import InvoiceDetailView from '../views/reports/InvoiceDetailView.vue';
-import InvoiceFormView from '../views/reports/InvoiceFormView.vue';
-import ClientDashboardView from '../views/client/ClientDashboardView.vue';
-import ClientProjectRequestsView from '../views/client/ClientProjectRequestsView.vue';
-import ClientInvoicesView from '../views/client/ClientInvoicesView.vue';
-import AiAssistantView from '../views/ai/AiAssistantView.vue';
-import NotFoundView from '../views/errors/NotFoundView.vue';
-import ProfileView from '../views/ProfileView.vue';
-import SettingsView from '../views/SettingsView.vue';
-import ForgotPasswordView from '../views/auth/ForgotPasswordView.vue';
-import ResetPasswordView from '../views/auth/ResetPasswordView.vue';
+import { createRouter, createWebHistory } from 'vue-router'
+import { useAuthStore } from '../stores/auth'
+import { useClientAuthStore } from '../stores/clientAuth'
+import { useAppStore } from '../stores/app'
+
+const DashboardLayout = () => import('../components/layouts/DashboardLayout.vue')
+const AuthLayout = () => import('../components/layouts/AuthLayout.vue')
+const ClientPortalLayout = () => import('../components/layouts/ClientPortalLayout.vue')
+
+const LoginView = () => import('../views/auth/LoginView.vue')
+const RegisterView = () => import('../views/auth/RegisterView.vue')
+const ForgotPasswordView = () => import('../views/auth/ForgotPasswordView.vue')
+const ResetPasswordView = () => import('../views/auth/ResetPasswordView.vue')
+
+const DashboardView = () => import('../views/DashboardView.vue')
+
+const ClientsView = () => import('../views/clients/ClientsView.vue')
+const ClientDetailView = () => import('../views/clients/ClientDetailView.vue')
+const ClientFormView = () => import('../views/clients/ClientFormView.vue')
+
+const ProjectsView = () => import('../views/projects/ProjectsView.vue')
+const ProjectDetailView = () => import('../views/projects/ProjectDetailView.vue')
+const ProjectFormView = () => import('../views/projects/ProjectFormView.vue')
+const ProjectExpensesView = () => import('../views/projects/ProjectExpensesView.vue')
+
+const TasksView = () => import('../views/tasks/TasksView.vue')
+const KanbanView = () => import('../views/tasks/KanbanView.vue')
+
+const TimeTrackingView = () => import('../views/time/TimeTrackingView.vue')
+const TimesheetView = () => import('../views/time/TimesheetView.vue')
+
+const InvoicesView = () => import('../views/reports/InvoicesView.vue')
+const InvoiceDetailView = () => import('../views/reports/InvoiceDetailView.vue')
+const InvoiceFormView = () => import('../views/reports/InvoiceFormView.vue')
+const ProposalsView = () => import('../views/reports/ProposalsView.vue')
+const ProposalDetailView = () => import('../views/reports/ProposalDetailView.vue')
+const ProposalFormView = () => import('../views/reports/ProposalFormView.vue')
+const ExpensesView = () => import('../views/reports/ExpensesView.vue')
+const RetainersView = () => import('../views/reports/RetainersView.vue')
+
+const ReportsView = () => import('../views/reports/ReportsView.vue')
+const RevenueReportView = () => import('../views/reports/RevenueReportView.vue')
+const ProjectReportView = () => import('../views/reports/ProjectReportView.vue')
+const TimeReportView = () => import('../views/reports/TimeReportView.vue')
+
+const ProfileView = () => import('../views/ProfileView.vue')
+const SettingsView = () => import('../views/SettingsView.vue')
+
+const AiAssistantView = () => import('../views/ai/AiAssistantView.vue')
+
+const NotFoundView = () => import('../views/errors/NotFoundView.vue')
+
+const ClientDashboardView = () => import('../views/client/ClientDashboardView.vue')
+const ClientProjectRequestsView = () => import('../views/client/ClientProjectRequestsView.vue')
+const ClientInvoicesView = () => import('../views/client/ClientInvoicesView.vue')
 
 const routes = [
   {
-    path: '/',
-    name: 'dashboard',
-    component: DashboardView
+    path: '/auth',
+    component: AuthLayout,
+    meta: { requiresGuest: true },
+    children: [
+      {
+        path: 'login',
+        name: 'Login',
+        component: LoginView,
+        meta: { title: 'Prijava' }
+      },
+      {
+        path: 'register',
+        name: 'Register',
+        component: RegisterView,
+        meta: { title: 'Registracija' }
+      },
+      {
+        path: 'forgot-password',
+        name: 'ForgotPassword',
+        component: ForgotPasswordView,
+        meta: { title: 'Zaboravljena lozinka' }
+      },
+      {
+        path: 'reset-password/:token',
+        name: 'ResetPassword',
+        component: ResetPasswordView,
+        meta: { title: 'Resetiranje lozinke' },
+        props: true
+      }
+    ]
   },
-  {
-    path: '/clients',
-    name: 'clients',
-    component: ClientsView
-  },
-  {
-    path: '/clients/new',
-    name: 'client-form',
-    component: ClientFormView
-  },
-  {
-    path: '/clients/:id',
-    name: 'client-detail',
-    component: ClientDetailView
-  },
-  {
-    path: '/projects',
-    name: 'projects',
-    component: ProjectsView
-  },
-  {
-    path: '/projects/new',
-    name: 'project-form',
-    component: ProjectFormView
-  },
-  {
-    path: '/projects/:id',
-    name: 'project-detail',
-    component: ProjectDetailView
-  },
-  {
-    path: '/kanban',
-    name: 'kanban',
-    component: KanbanView
-  },
-  {
-    path: '/tasks',
-    name: 'tasks',
-    component: TasksView
-  },
-  {
-    path: '/projects/:id/kanban',
-    name: 'project-kanban',
-    component: () => import('../views/projects/KanbanView.vue')
-  },
-  {
-    path: '/time-tracking',
-    name: 'time-tracking',
-    component: TimeTrackingView
-  },
-  {
-    path: '/time-entries',
-    name: 'time-entries',
-    component: TimeEntriesView
-  },
-  {
-    path: '/timesheet',
-    name: 'timesheet',
-    component: TimesheetView
-  },
-  {
-    path: '/invoices',
-    name: 'invoices',
-    component: InvoicesListView
-  },
-  {
-    path: '/invoices/generate',
-    name: 'invoice-generate',
-    component: InvoiceGenerateView
-  },
-  {
-    path: '/projects/:id/expenses',
-    name: 'project-expenses',
-    component: () => import('../views/projects/ProjectExpensesView.vue')
-  },
-  {
-    path: '/financial',
-    name: 'financial-dashboard',
-    component: FinancialDashboardView
-  },
-  {
-    path: '/expenses',
-    name: 'expenses',
-    component: ExpensesView
-  },
-  {
-    path: '/proposals',
-    name: 'proposals',
-    component: ProposalsView
-  },
-  {
-    path: '/proposals/new',
-    name: 'proposal-form',
-    component: ProposalFormView
-  },
-  {
-    path: '/proposals/:id',
-    name: 'proposal-detail',
-    component: ProposalDetailView
-  },
-  {
-    path: '/retainers',
-    name: 'retainers',
-    component: RetainersView
-  },
-  {
-    path: '/reports',
-    name: 'reports',
-    component: ReportsView
-  },
-  {
-    path: '/reports/projects',
-    name: 'project-reports',
-    component: ProjectReportView
-  },
-  {
-    path: '/reports/revenue',
-    name: 'revenue-reports',
-    component: RevenueReportView
-  },
-  {
-    path: '/reports/time',
-    name: 'time-reports',
-    component: TimeReportView
-  },
-  {
-    path: '/reports/invoices',
-    name: 'invoice-reports',
-    component: InvoicesView
-  },
-  {
-    path: '/reports/invoices/:id',
-    name: 'invoice-detail',
-    component: InvoiceDetailView
-  },
-  {
-    path: '/reports/invoices/form',
-    name: 'invoice-form',
-    component: InvoiceFormView
-  },
+  
   {
     path: '/client',
-    name: 'client-dashboard',
-    component: ClientDashboardView
+    component: ClientPortalLayout,
+    meta: { requiresClientAuth: true },
+    children: [
+      {
+        path: 'dashboard',
+        name: 'ClientDashboard',
+        component: ClientDashboardView,
+        meta: { title: 'Klijentski Portal - Nadzorna ploča' }
+      },
+      {
+        path: 'project-requests',
+        name: 'ClientProjectRequests',
+        component: ClientProjectRequestsView,
+        meta: { title: 'Klijentski Portal - Zahtjevi za projekt' }
+      },
+      {
+        path: 'invoices',
+        name: 'ClientInvoices',
+        component: ClientInvoicesView,
+        meta: { title: 'Klijentski Portal - Računi' }
+      },
+      
+      {
+        path: '',
+        redirect: '/client/dashboard'
+      }
+    ]
+  },
+  
+  {
+    path: '/',
+    component: DashboardLayout,
+    meta: { requiresAuth: true },
+    children: [
+      {
+        path: '',
+        name: 'Dashboard',
+        component: DashboardView,
+        meta: { title: 'Nadzorna ploča' }
+      },
+      
+      {
+        path: 'clients',
+        name: 'Clients',
+        component: ClientsView,
+        meta: { title: 'Klijenti' }
+      },
+      {
+        path: 'clients/new',
+        name: 'ClientCreate',
+        component: ClientFormView,
+        meta: { title: 'Novi klijent' }
+      },
+      {
+        path: 'clients/:id',
+        name: 'ClientDetail',
+        component: ClientDetailView,
+        meta: { title: 'Detalji klijenta' },
+        props: true
+      },
+      {
+        path: 'clients/:id/edit',
+        name: 'ClientEdit',
+        component: ClientFormView,
+        meta: { title: 'Uređivanje klijenta' },
+        props: true
+      },
+      
+      {
+        path: 'projects',
+        name: 'Projects',
+        component: ProjectsView,
+        meta: { title: 'Projekti' }
+      },
+      {
+        path: 'projects/new',
+        name: 'ProjectCreate',
+        component: ProjectFormView,
+        meta: { title: 'Novi projekt' }
+      },
+      {
+        path: 'projects/:id',
+        name: 'ProjectDetail',
+        component: ProjectDetailView,
+        meta: { title: 'Detalji projekta' },
+        props: true
+      },
+      {
+        path: 'projects/:id/edit',
+        name: 'ProjectEdit',
+        component: ProjectFormView,
+        meta: { title: 'Uređivanje projekta' },
+        props: true
+      },
+      {
+        path: 'projects/:id/expenses',
+        name: 'ProjectExpenses',
+        component: ProjectExpensesView,
+        meta: { title: 'Troškovi projekta' },
+        props: true
+      },
+      
+      {
+        path: 'tasks',
+        name: 'Tasks',
+        component: TasksView,
+        meta: { title: 'Zadaci' }
+      },
+      {
+        path: 'kanban',
+        name: 'Kanban',
+        component: KanbanView,
+        meta: { title: 'Kanban ploča' }
+      },
+      
+      {
+        path: 'time',
+        name: 'TimeTracking',
+        component: TimeTrackingView,
+        meta: { title: 'Praćenje vremena' }
+      },
+      {
+        path: 'timesheet',
+        name: 'Timesheet',
+        component: TimesheetView,
+        meta: { title: 'Evidencija rada' }
+      },
+      
+      { path: 'finances', redirect: '/reports' },
+      { path: 'expenses', redirect: '/reports/expenses' },
+      { path: 'proposals', redirect: '/reports/proposals' },
+      { path: 'retainers', redirect: '/reports/retainers' },
+      { path: 'invoices', redirect: '/reports/invoices' },
+      { path: 'invoices/new', redirect: '/reports/invoices/new' },
+      
+      {
+        path: 'reports',
+        name: 'Reports',
+        component: ReportsView,
+        meta: { title: 'Financije & Izvještaji' }
+      },
+      {
+        path: 'reports/revenue',
+        name: 'RevenueReport',
+        component: RevenueReportView,
+        meta: { title: 'Izvještaj prihoda' }
+      },
+      {
+        path: 'reports/projects',
+        name: 'ProjectReport',
+        component: ProjectReportView,
+        meta: { title: 'Izvještaj projekata' }
+      },
+      {
+        path: 'reports/time',
+        name: 'TimeReport',
+        component: TimeReportView,
+        meta: { title: 'Izvještaj vremena' }
+      },
+      {
+        path: 'reports/invoices',
+        name: 'InvoicesManagement',
+        component: InvoicesView,
+        meta: { title: 'Upravljanje računima' }
+      },
+      {
+        path: 'reports/invoices/new',
+        name: 'InvoiceCreate',
+        component: InvoiceFormView,
+        meta: { title: 'Novi račun' }
+      },
+      {
+        path: 'reports/invoices/:id',
+        name: 'InvoiceDetail',
+        component: InvoiceDetailView,
+        meta: { title: 'Detalji računa' },
+        props: true
+      },
+      {
+        path: 'reports/invoices/:id/edit',
+        name: 'InvoiceEdit',
+        component: InvoiceFormView,
+        meta: { title: 'Uređivanje računa' },
+        props: true
+      },
+      {
+        path: 'reports/proposals',
+        name: 'ProposalsManagement',
+        component: ProposalsView,
+        meta: { title: 'Upravljanje ponudama' }
+      },
+      {
+        path: 'reports/proposals/new',
+        name: 'ProposalCreate',
+        component: ProposalFormView,
+        meta: { title: 'Nova ponuda' }
+      },
+      {
+        path: 'reports/proposals/:id',
+        name: 'ProposalDetail',
+        component: ProposalDetailView,
+        meta: { title: 'Detalji ponude' },
+        props: true
+      },
+      {
+        path: 'reports/proposals/:id/edit',
+        name: 'ProposalEdit',
+        component: ProposalFormView,
+        meta: { title: 'Uređivanje ponude' },
+        props: true
+      },
+      {
+        path: 'reports/expenses',
+        name: 'ExpensesManagement',
+        component: ExpensesView,
+        meta: { title: 'Upravljanje troškovima' }
+      },
+      {
+        path: 'reports/retainers',
+        name: 'RetainersManagement',
+        component: RetainersView,
+        meta: { title: 'Upravljanje honorarima' }
+      },
+      
+      {
+        path: 'profile',
+        name: 'Profile',
+        component: ProfileView,
+        meta: { title: 'Profil' }
+      },
+      {
+        path: 'settings',
+        name: 'Settings',
+        component: SettingsView,
+        meta: { title: 'Postavke' }
+      },
+      
+      {
+        path: 'ai-assistant',
+        name: 'AiAssistant',
+        component: AiAssistantView,
+        meta: { title: 'AI Asistent' }
+      }
+    ]
+  },
+  
+  
+  {
+    path: '/login',
+    redirect: '/auth/login'
   },
   {
-    path: '/client/projects',
-    name: 'client-projects',
-    component: ClientProjectRequestsView
+    path: '/register',
+    redirect: '/auth/register'
   },
-  {
-    path: '/client/invoices',
-    name: 'client-invoices',
-    component: ClientInvoicesView
-  },
-  {
-    path: '/ai-assistant',
-    name: 'ai-assistant',
-    component: AiAssistantView
-  },
-  {
-    path: '/profile',
-    name: 'profile',
-    component: ProfileView
-  },
-  {
-    path: '/settings',
-    name: 'settings', 
-    component: SettingsView
-  },
-  {
-    path: '/forgot-password',
-    name: 'forgot-password',
-    component: ForgotPasswordView
-  },
-  {
-    path: '/reset-password',
-    name: 'reset-password',
-    component: ResetPasswordView
-  },
+  
   {
     path: '/:pathMatch(.*)*',
-    name: 'not-found',
-    component: NotFoundView
+    name: 'NotFound',
+    component: NotFoundView,
+    meta: { title: 'Stranica nije pronađena' }
   }
-];
+]
 
 const router = createRouter({
   history: createWebHistory(),
   routes
-});
+})
 
-export default router;
+router.beforeEach(async (to, from, next) => {
+  const authStore = useAuthStore()
+  const clientAuthStore = useClientAuthStore()
+  const appStore = useAppStore()
+  
+  appStore.setLoading(true)
+  
+  if (to.meta.title) {
+    document.title = `${to.meta.title} - FreelancerHub`
+  } else {
+    document.title = 'FreelancerHub'
+  }
+  
+  if (to.meta.requiresClientAuth) {
+    if (!clientAuthStore.isAuthenticated) {
+      next('/auth/login')
+      return
+    }
+  }
+  
+  if (to.meta.requiresAuth) {
+    if (!authStore.isAuthenticated) {
+      const isAuthenticated = await authStore.checkAuth()
+      
+      if (!isAuthenticated) {
+        next('/auth/login')
+        return
+      }
+    }
+  }
+  
+  if (to.meta.requiresGuest && authStore.isAuthenticated) {
+    next('/')
+    return
+  }
+  
+  next()
+})
+
+router.afterEach(() => {
+  const appStore = useAppStore()
+  appStore.setLoading(false)
+})
+
+export default router

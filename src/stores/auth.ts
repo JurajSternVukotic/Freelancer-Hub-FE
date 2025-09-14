@@ -4,27 +4,26 @@ import type { User, LoginCredentials, RegisterData } from '../types/auth'
 import { authService } from '../services/authService'
 
 export const useAuthStore = defineStore('auth', () => {
-
   const user = ref<User | null>(JSON.parse(localStorage.getItem('user_data') || 'null'))
   const token = ref<string | null>(localStorage.getItem('auth_token'))
   const refreshToken = ref<string | null>(localStorage.getItem('refresh_token'))
   const isLoading = ref(false)
-
+  
   const isAuthenticated = computed(() => !!token.value && !!user.value)
   const userRole = computed(() => user.value?.role || null)
   const isFreelancer = computed(() => user.value?.role === 'freelancer')
   const isClient = computed(() => user.value?.role === 'client')
-
+  
   async function login(credentials: LoginCredentials) {
     isLoading.value = true
     try {
       const response = await authService.login(credentials)
-
+      
       const userData = response.data || response
       token.value = userData.tokens?.accessToken || userData.accessToken
       refreshToken.value = userData.tokens?.refreshToken || userData.refreshToken
       user.value = userData.user
-
+      
       localStorage.setItem('auth_token', token.value)
       localStorage.setItem('refresh_token', refreshToken.value)
       localStorage.setItem('user_data', JSON.stringify(user.value))
@@ -48,7 +47,7 @@ export const useAuthStore = defineStore('auth', () => {
       token.value = response.accessToken
       refreshToken.value = response.refreshToken
       user.value = response.user
-
+      
       localStorage.setItem('auth_token', response.accessToken)
       localStorage.setItem('refresh_token', response.refreshToken)
       localStorage.setItem('user_data', JSON.stringify(user.value))
@@ -67,18 +66,16 @@ export const useAuthStore = defineStore('auth', () => {
   async function logout() {
     try {
       if (token.value) {
-
         await authService.logout()
       }
     } catch (error) {
-
       console.error('Logout API error (ignored):', error)
     }
-
+    
     user.value = null
     token.value = null
     refreshToken.value = null
-
+    
     localStorage.removeItem('auth_token')
     localStorage.removeItem('refresh_token')
     localStorage.removeItem('user_data')
@@ -87,44 +84,43 @@ export const useAuthStore = defineStore('auth', () => {
   }
   
   async function refreshAuthToken() {
-    console.log('🔄 RefreshAuthToken called')
-    
+    console.log(' RefreshAuthToken called')    
     if (!refreshToken.value) {
-      console.log('❌ No refresh token available')
+      console.log('No refresh token available')
       return false
     }
-
+    
     if (!token.value) {
-      console.log('❌ No access token available')
+      console.log('No access token available')
       return false
     }
     
     try {
-      console.log('🔄 Calling refresh token service...')
+      console.log('Calling refresh token service...')
       const response = await authService.refreshToken(refreshToken.value)
       
       if (response.accessToken) {
-        console.log('✅ New access token received')
+        console.log('New access token received')
         token.value = response.accessToken
         localStorage.setItem('auth_token', response.accessToken)
         
         if (response.refreshToken) {
-          console.log('✅ New refresh token received')
+          console.log('New refresh token received')
           refreshToken.value = response.refreshToken
           localStorage.setItem('refresh_token', response.refreshToken)
         }
         
         return true
       } else {
-        console.log('❌ No access token in refresh response')
+        console.log('No access token in refresh response')
         await logout()
         return false
       }
     } catch (error: any) {
-      console.error('❌ Token refresh failed:', error)
-
+      console.error('Token refresh failed:', error)
+      
       if (error.response?.status === 401 || error.response?.status === 403) {
-        console.log('❌ Refresh token invalid, logging out')
+        console.log('Refresh token invalid, logging out')
         await logout()
       }
       
@@ -136,7 +132,7 @@ export const useAuthStore = defineStore('auth', () => {
     if (!token.value) {
       return false
     }
-
+    
     if (user.value) {
       return true
     }
@@ -144,12 +140,11 @@ export const useAuthStore = defineStore('auth', () => {
     try {
       const userData = await authService.getCurrentUser()
       user.value = userData
-
       localStorage.setItem('user_data', JSON.stringify(user.value))
       return true
     } catch (error) {
       console.error('Auth check failed:', error)
-
+      
       const refreshed = await refreshAuthToken()
       if (refreshed) {
         try {
@@ -200,17 +195,16 @@ export const useAuthStore = defineStore('auth', () => {
   }
   
   return {
-
     user,
     token,
     refreshToken,
     isLoading,
-
+    
     isAuthenticated,
     userRole,
     isFreelancer,
     isClient,
-
+    
     login,
     register,
     logout,

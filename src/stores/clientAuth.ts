@@ -35,7 +35,6 @@ export interface ClientRegisterData {
 }
 
 export const useClientAuthStore = defineStore('clientAuth', () => {
-
   const getStoredClient = () => {
     try {
       const clientData = localStorage.getItem('client_data')
@@ -50,9 +49,9 @@ export const useClientAuthStore = defineStore('clientAuth', () => {
   const client = ref<Client | null>(getStoredClient())
   const token = ref<string | null>(localStorage.getItem('client_token'))
   const isLoading = ref(false)
-
+  
   const isAuthenticated = computed(() => !!token.value && !!client.value)
-
+  
   async function login(credentials: ClientLoginCredentials) {
     isLoading.value = true
     try {
@@ -60,7 +59,7 @@ export const useClientAuthStore = defineStore('clientAuth', () => {
       
       token.value = response.data.data.token
       client.value = response.data.data.client
-
+      
       localStorage.setItem('client_token', token.value)
       localStorage.setItem('client_data', JSON.stringify(client.value))
       
@@ -88,7 +87,7 @@ export const useClientAuthStore = defineStore('clientAuth', () => {
         'Molimo prijavite se sa vašim podacima.',
         'Uspješna registracija!'
       )
-
+      
       return response
     } catch (error: any) {
       const message = error.response?.data?.message || 'Greška pri registraciji'
@@ -101,10 +100,9 @@ export const useClientAuthStore = defineStore('clientAuth', () => {
   
   async function logout() {
     try {
-
       client.value = null
       token.value = null
-
+      
       localStorage.removeItem('client_token')
       localStorage.removeItem('client_data')
       
@@ -124,7 +122,6 @@ export const useClientAuthStore = defineStore('clientAuth', () => {
       client.value = response.data
       return true
     } catch (error) {
-
       await logout()
       return false
     }
@@ -133,19 +130,18 @@ export const useClientAuthStore = defineStore('clientAuth', () => {
   function setClientData(data: { client: Client, token: string }) {
     client.value = data.client
     token.value = data.token
-
+    
     localStorage.setItem('client_token', data.token)
     localStorage.setItem('client_data', JSON.stringify(data.client))
   }
   
   return {
-
     client: readonly(client),
     token: readonly(token),
     isLoading: readonly(isLoading),
-
+    
     isAuthenticated,
-
+    
     login,
     register,
     logout,

@@ -6,7 +6,6 @@
     </div>
     
     <form @submit.prevent="handleSubmit" class="register-form">
-      
       <div class="form-group">
         <label class="form-label">Tip računa</label>
         <div class="role-selector">
@@ -44,7 +43,7 @@
         </div>
         <div v-if="errors.role" class="form-error">{{ errors.role }}</div>
       </div>
-
+      
       <div v-if="form.role === 'FREELANCER'" class="form-row">
         <div class="form-group">
           <label for="firstName" class="form-label">Ime</label>
@@ -156,21 +155,21 @@
           <span class="password-meter-text">{{ passwordStrength.text }}</span>
         </div>
       </div>
-
+      
       <div class="form-group">
         <label for="company" class="form-label">
-          {{ form.role === 'freelancer' ? 'Naziv djelatnosti (opcionalno)' : 'Tvrtka (opcionalno)' }}
+          {{ form.role === 'FREELANCER' ? 'Naziv djelatnosti (opcionalno)' : 'Tvrtka (opcionalno)' }}
         </label>
         <input
           id="company"
           v-model="form.company"
           type="text"
           class="form-input"
-          :placeholder="form.role === 'freelancer' ? 'Ana Design Studio' : 'ABC d.o.o.'"
+          :placeholder="form.role === 'FREELANCER' ? 'Ana Design Studio' : 'ABC d.o.o.'"
         />
       </div>
       
-      <div v-if="form.role === 'freelancer'" class="form-group">
+      <div v-if="form.role === 'FREELANCER'" class="form-group">
         <label for="hourlyRate" class="form-label">Satnica (EUR, opcionalno)</label>
         <input
           id="hourlyRate"
@@ -182,7 +181,7 @@
           placeholder="50.00"
         />
       </div>
-
+      
       <div class="form-group">
         <label class="checkbox-label">
           <input
@@ -301,7 +300,7 @@ function validateForm() {
   if (!form.value.role) {
     errors.value.role = 'Odaberite tip računa'
   }
-
+  
   if (form.value.role === 'FREELANCER') {
     if (!form.value.firstName) {
       errors.value.firstName = 'Ime je obavezno'
@@ -332,7 +331,6 @@ async function handleSubmit() {
   
   try {
     if (form.value.role === 'CLIENT') {
-
       const clientData = {
         company: form.value.company,
         contactPerson: form.value.contactPerson,
@@ -343,7 +341,6 @@ async function handleSubmit() {
       await clientAuthStore.register(clientData)
       router.push('/client/dashboard')
     } else {
-
       const registrationData = {
         email: form.value.email,
         password: form.value.password,

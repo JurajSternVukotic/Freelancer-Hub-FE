@@ -75,7 +75,6 @@ async function handleSubmit() {
   isLoading.value = true
   
   try {
-
     await new Promise(resolve => setTimeout(resolve, 2000))
     toast.success('Link za resetiranje lozinke je poslan na vašu email adresu')
   } catch (error) {

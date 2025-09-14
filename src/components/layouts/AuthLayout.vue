@@ -75,6 +75,7 @@ const appStore = useAppStore()
 
 const isDarkMode = computed(() => appStore.isDarkMode)
 
+
 function toggleTheme() {
   appStore.toggleTheme()
 }
@@ -282,4 +283,5 @@ function toggleTheme() {
     justify-content: flex-start;
     padding-top: 2rem;
   }
-}</style>
+}
+</style>
